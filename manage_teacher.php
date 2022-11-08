@@ -1,6 +1,7 @@
 <?php include_once 'lib/connection.php';
 session_start();
 include 'lib/student/addStudent.php';
+$page = "manage_teacher";
 ?>
 
 <!DOCTYPE html>
@@ -109,11 +110,12 @@ include 'lib/student/addStudent.php';
    ?>
    <main id="main" class="main">
       <div class="pagetitle">
-         <h1>Dashboard</h1>
+         <h1>Manage Teacher</h1>
          <nav>
             <ol class="breadcrumb">
-               <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-               <li class="breadcrumb-item active">Dashboard</li>
+               <li class="breadcrumb-item">Manage</li>
+               <li class="breadcrumb-item">Users</li>
+               <li class="breadcrumb-item active">Teacher</li>
             </ol>
          </nav>
       </div>
@@ -146,23 +148,23 @@ include 'lib/student/addStudent.php';
                </thead>
                <tbody class="table-group-divider">
                   <?php
-                  $select = $pdo->prepare("SELECT * FROM student_list  ORDER BY student_id ASC");
+                  $select = $pdo->prepare("SELECT * FROM teacher_list  ORDER BY teacher_id ASC");
 
                   $select->execute();
                   while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
                   ?>
                      <tr>
-                        <td><?php echo $row["student_id"]; ?></td>
-                        <td><?php echo $row["student_firstname"]; ?></td>
-                        <td><?php echo $row["student_middlename"]; ?></td>
-                        <td><?php echo $row["student_lastname"]; ?></td>
+                        <td><?php echo $row["teacher_id"]; ?></td>
+                        <td><?php echo $row["teacher_firstname"]; ?></td>
+                        <td><?php echo $row["teacher_middlename"]; ?></td>
+                        <td><?php echo $row["teacher_lastname"]; ?></td>
                         <td><?php echo $row["department"]; ?></td>
                         <td>
                            <button name="edit" type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#updateStudent" data-toggle="tooltip" title="Edit"><i class="bi bi-pencil-square"></i></button>
                         </td>
                         <td>
                            <form action="lib/student/deleteStudent.php" method="post">
-                              <input type="hidden" name="id" value="<?php echo $row['student_id'] ?>">
+                              <input type="hidden" name="id" value="<?php echo $row['teacher_id'] ?>">
                               <button type="submit" name="delete" class="btn btn-danger" data-toggle="tooltip" title="Delete"><i class="bi bi-trash"></i></button>
                            </form>
                         </td>
@@ -183,7 +185,7 @@ include 'lib/student/addStudent.php';
             pagingType: 'full_numbers',
             responsive: true,
             columnDefs: [{
-               'targets': [0, 2, 3, 4, 5],
+               'targets': [0, 2, 3, 4, 5,6],
                /* column index */
 
                'orderable': false,

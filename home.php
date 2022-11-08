@@ -1,6 +1,7 @@
 <?php include_once 'lib/connection.php';
 session_start();
 include 'lib/student/addStudent.php';
+$page = "home";
 ?>
 
 <!DOCTYPE html>

@@ -1,6 +1,7 @@
 <?php include_once 'lib/connection.php';
 session_start();
 include 'lib/student/addStudent.php';
+$page = "manage_student";
 ?>
 
 <!DOCTYPE html>
@@ -109,11 +110,12 @@ include 'lib/student/addStudent.php';
    ?>
    <main id="main" class="main">
       <div class="pagetitle">
-         <h1>Dashboard</h1>
+         <h1>Manage Student</h1>
          <nav>
             <ol class="breadcrumb">
-               <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-               <li class="breadcrumb-item active">Dashboard</li>
+               <li class="breadcrumb-item">Manage</li>
+               <li class="breadcrumb-item">Users</li>
+               <li class="breadcrumb-item active">Student</li>
             </ol>
          </nav>
       </div>
