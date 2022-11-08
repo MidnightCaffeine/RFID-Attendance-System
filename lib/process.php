@@ -1,59 +1,77 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["action"])) {
-	switch ($_POST['action']) {
-		case 'insertRecord':
-			insertRecord();
-			break;
-		case 'showProcess':
-			showProcess();
-		default:
-			break;
-	}
-}
-
-function insertRecord()
-{
-	include 'connection.php';
-	date_default_timezone_set('Asia/Manila');
-	$cardid = $_POST['cardid'];
-	$d = date("Y-m-d");
-	$t = date("H:i:sa");
+include 'connection.php';
+date_default_timezone_set('Asia/Manila');
+$cardid = $_POST['cardid'];
+$d = date("Y-m-d");
+$t = date("H:i:sa");
 
 
-	$select = $pdo->prepare("SELECT * from user_list where card_number='$cardid'");
-	$select->execute();
+$select = $pdo->prepare("SELECT * from user_list where card_number='$cardid'");
+$select->execute();
 
-	while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-		$id = $row["id"];
-		if ($row["position"] == "Student") {
+while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+	$id = $row["id"];
+	if ($row["position"] == "Student") {
 
-			$select = $pdo->prepare("SELECT * from `student_list` where student_id = '$id'");
-			$select->execute();
-			while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-				$firstname = $row["student_firstname"];
-				$mname = $row["student_middlename"];
-				$lname = $row["student_lastname"];
-			}
-			$fullname = $firstname . " " . $mname . " " . $lname;
-			$insert = $pdo->prepare("INSERT INTO `attendance`(`name`, `date`, `time_in`) VALUES ($fullname, $d, $t)");
-			$insert->execute();
-
-			echo "success";
+		$select = $pdo->prepare("SELECT * from `student_list` where student_id = '$id'");
+		$select->execute();
+		while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+			$firstname = $row["student_firstname"];
+			$mname = $row["student_middlename"];
+			$lname = $row["student_lastname"];
 		}
-	}
-}
+		$fullname = $firstname . " " . $mname . " " . $lname;
 
-function showProcess()
-{
-	include 'connection.php';
+		$select = $pdo->prepare("SELECT fullname from attendance where fullname='$fullname' AND date='$d'");
+		$select->execute();
 
-	$logs = $pdo->query("SELECT * FROM `rfid`");
-	while ($r = $logs->fetch()) {
-		echo "<tr>";
-		echo "<td>" . $r['id'] . "</td>";
-		echo "<td>" . $r['cardid'] . "</td>";
-		$dateadded = date("F j, Y, g:i a", $r["logdate"]);
-		echo "<td>" . $dateadded . "</td>";
-		echo "</tr>";
+		if ($select->rowCount() > 0) { //logout
+			while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+				$temp = $row["time_out"];
+			}
+			if ($temp == "") {
+				$update = $pdo->prepare("UPDATE `attendance` SET `time_out` = '$t' WHERE `attendance`.`fullname` = '$fullname'");
+				$update->execute();
+			} else {//login
+				$insert = $pdo->prepare("INSERT INTO `attendance`(`fullname`, `date`, `time_in`) VALUES (:fullname, :d, :t)");
+				$insert->bindParam(":fullname", $fullname);
+				$insert->bindParam(":d", $d);
+				$insert->bindParam(":t", $t);
+				$insert->execute();
+			}
+		} else { 
+			$insert = $pdo->prepare("INSERT INTO `attendance`(`fullname`, `date`, `time_in`) VALUES (:fullname, :d, :t)");
+			$insert->bindParam(":fullname", $fullname);
+			$insert->bindParam(":d", $d);
+			$insert->bindParam(":t", $t);
+			$insert->execute();
+		}//end of login
+
+		echo "success";
+	} else {
+		$select = $pdo->prepare("SELECT * from `student_list` where student_id = '$id'");
+		$select->execute();
+		while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+			$firstname = $row["student_firstname"];
+			$mname = $row["student_middlename"];
+			$lname = $row["student_lastname"];
+		}
+		$fullname = $firstname . " " . $mname . " " . $lname;
+
+		$select = $pdo->prepare("SELECT fullname FROM attendance WHERE fullname='$fullname' AND date='$d'");
+		$select->execute();
+
+		if ($select->rowCount() > 0) { //logout
+			$update = $pdo->prepare("UPDATE `attendance` SET `time_out` = '$t' WHERE `attendance`.`fullname` = '$fullname'");
+			$update->execute();
+		} else { //login
+			$insert = $pdo->prepare("INSERT INTO `attendance`(`fullname`, `date`, `time_in`) VALUES (:fullname, :d, :t)");
+			$insert->bindParam(":fullname", $fullname);
+			$insert->bindParam(":d", $d);
+			$insert->bindParam(":t", $t);
+			$insert->execute();
+		}
+
+		echo "success";
 	}
 }

@@ -1,9 +1,9 @@
 <?php
 if (isset($_POST['btn_signup'])) {
 
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $middlename = $_POST['middlename'];
+    $firstname = ucwords(strtolower($_POST['firstname'])) ;
+    $lastname = ucwords(strtolower($_POST['lastname']));
+    $middlename = ucwords(strtolower($_POST['middlename']));
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
