@@ -36,77 +36,18 @@ $page = "manage_teacher";
    <script src="assets/js/quill.min.js"></script>
    <script src="assets/js/tinymce.min.js"></script>
    <script src="assets/js/main.js"></script>
-   <script>
-      $(document).ready(function() {
-         $('body').on('shown.bs.modal', '.modal', function() {
-            e.preventDefault();
-            // validate signup form on keyup and submit
-            $("#addstudent").validate({
-               rules: {
-                  firstname: "required",
-                  lastname: "required",
-                  middlename: "required",
-                  username: {
-                     required: true,
-                     minlength: 5,
-                     remote: {
-                        url: "lib/ifUserExist.php",
-                        type: "post"
-                     }
-                  },
-                  password: {
-                     required: true,
-                     minlength: 4
-                  },
-                  confirm_password: {
-                     required: true,
-                     minlength: 4,
-                     equalTo: "#password"
-                  },
-                  email: {
-                     required: true,
-                     email: true,
-                     remote: {
-                        url: "lib/ifUserExist.php",
-                        type: "post"
-                     }
-                  },
-               },
-               messages: {
-                  firstname: "Please enter your firstname",
-                  lastname: "Please enter your lastname",
-                  middlename: "Please enter your middlename",
-                  username: {
-                     required: "Please enter a username",
-                     minlength: "Your username must consist of at least 5 characters",
-                     remote: "Email already in use!"
-                  },
-                  password: {
-                     required: "Please provide a password",
-                     minlength: "Your password must be at least 6 characters long"
-                  },
-                  confirm_password: {
-                     required: "Please provide a password",
-                     minlength: "Your password must be at least 6 characters long",
-                     equalTo: "Please enter the same password as above"
-                  },
-                  email: {
-                     required: "Please provide an email address",
-                     email: "Please enter a valid email address",
-                     remote: "Email already in use!"
-                  }
-               }
-            });
-         })
-
-      });
-   </script>
 </head>
 
 <body>
    <?php
    include 'include/navigation.php';
-   include 'include/sideNavigation.php';
+   if ($_SESSION["position"] == "Administrator") {
+      include 'include/sideNavigation.php';
+   } elseif ($_SESSION["position"] == "Instructor") {
+      include 'include/instructorSideNavigation.php';
+   } elseif ($_SESSION["position"] == "Student") {
+      include 'include/studentSideNavigation.php';
+   }
    ?>
    <main id="main" class="main">
       <div class="pagetitle">
@@ -185,7 +126,7 @@ $page = "manage_teacher";
             pagingType: 'full_numbers',
             responsive: true,
             columnDefs: [{
-               'targets': [0, 2, 3, 4, 5,6],
+               'targets': [0, 2, 3, 4, 5, 6],
                /* column index */
 
                'orderable': false,

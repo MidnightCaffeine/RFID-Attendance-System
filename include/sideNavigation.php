@@ -3,9 +3,9 @@
       <li class="nav-item">
          <a class="nav-link 
             <?php
-            if ($page != "home") {
-               echo " collapsed";
-            }
+            if ($page == "home") {
+               echo "";
+            }else{echo "collapsed";}
             ?>" href="home.php">
             <i class='bx bxs-dashboard'></i>
             <span>Dashboard</span>

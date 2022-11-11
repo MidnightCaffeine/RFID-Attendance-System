@@ -10,7 +10,7 @@ $page = "home";
 <head>
    <meta charset="utf-8">
    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-   <title>Manage Student</title>
+   <title>Home</title>
    <meta name="robots" content="noindex, nofollow">
    <meta content="" name="description">
    <meta content="" name="keywords">
@@ -36,128 +36,32 @@ $page = "home";
    <script src="assets/js/quill.min.js"></script>
    <script src="assets/js/tinymce.min.js"></script>
    <script src="assets/js/main.js"></script>
-   <script>
-      $(document).ready(function() {
-         $('body').on('shown.bs.modal', '.modal', function() {
-            e.preventDefault();
-            // validate signup form on keyup and submit
-            $("#addstudent").validate({
-               rules: {
-                  firstname: "required",
-                  lastname: "required",
-                  middlename: "required",
-                  username: {
-                     required: true,
-                     minlength: 5,
-                     remote: {
-                        url: "lib/ifUserExist.php",
-                        type: "post"
-                     }
-                  },
-                  password: {
-                     required: true,
-                     minlength: 4
-                  },
-                  confirm_password: {
-                     required: true,
-                     minlength: 4,
-                     equalTo: "#password"
-                  },
-                  email: {
-                     required: true,
-                     email: true,
-                     remote: {
-                        url: "lib/ifUserExist.php",
-                        type: "post"
-                     }
-                  },
-               },
-               messages: {
-                  firstname: "Please enter your firstname",
-                  lastname: "Please enter your lastname",
-                  middlename: "Please enter your middlename",
-                  username: {
-                     required: "Please enter a username",
-                     minlength: "Your username must consist of at least 5 characters",
-                     remote: "Email already in use!"
-                  },
-                  password: {
-                     required: "Please provide a password",
-                     minlength: "Your password must be at least 6 characters long"
-                  },
-                  confirm_password: {
-                     required: "Please provide a password",
-                     minlength: "Your password must be at least 6 characters long",
-                     equalTo: "Please enter the same password as above"
-                  },
-                  email: {
-                     required: "Please provide an email address",
-                     email: "Please enter a valid email address",
-                     remote: "Email already in use!"
-                  }
-               }
-            });
-         })
-
-      });
-   </script>
 </head>
 
 <body>
    <?php
    include 'include/navigation.php';
-   include 'include/sideNavigation.php';
+   if ($_SESSION["position"] == "Administrator") {
+      include 'include/sideNavigation.php';
+   } elseif ($_SESSION["position"] == "Instructor") {
+      include 'include/instructorSideNavigation.php';
+   } elseif ($_SESSION["position"] == "Student") {
+      include 'include/studentSideNavigation.php';
+   }
+
    ?>
    <main id="main" class="main">
       <div class="pagetitle">
          <h1>Dashboard</h1>
          <nav>
             <ol class="breadcrumb">
-               <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-               <li class="breadcrumb-item active">Dashboard</li>
+               <li class="breadcrumb-item active"><a href="home.php">Home</a></li>
             </ol>
          </nav>
       </div>
       <section class="section dashboard">
          <div class="row">
-            <div class="d-flex align-items-center mt-3 mb-2">
-               <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort</button>
-                  <ul class="dropdown-menu">
-                     <li><a href="#" class="dropdown-item">BSIT AP3</a></li>
-                     <li><a href="#" class="dropdown-item">BSIT AP4</a></li>
-                  </ul>
-               </div>
-
-               <!-- add trigger modal -->
-               <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#addStudent">Add Students</button>
-
-            </div>
-            <table id="studentTable" class="display table table-bordered">
-               <thead>
-                  <tr>
-                     <th>Student ID</th>
-                     <th>Firstname</th>
-                     <th>Middlename</th>
-                  </tr>
-               </thead>
-               <tbody class="table-group-divider">
-                  <?php
-                  $select = $pdo->prepare("SELECT * FROM `rfid`");
-
-                  $select->execute();
-                  while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-                  ?>
-                     <?php $dateadded = date("F j, Y, g:i a", $row["logdate"]); ?>
-                     <tr>
-                        <td><?php echo $row["id"]; ?></td>
-                        <td><?php echo $row["cardid"]; ?></td>
-                        <td><?php echo $dateadded ?></td>
-                     </tr> <?php
-                        }
-                           ?>
-               </tbody>
-            </table>
+            
          </div>
       </section>
    </main>
@@ -171,7 +75,7 @@ $page = "home";
          $('#studentTable').DataTable({
             pagingType: 'full_numbers',
             responsive: true,
-            
+
          });
       });
    </script>
