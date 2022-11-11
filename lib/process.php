@@ -27,10 +27,11 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 
 		if ($select->rowCount() > 0) { //logout
 			while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+				$id = $row["id"];
 				$temp = $row["time_out"];
 			}
 			if ($temp == "") {
-				$update = $pdo->prepare("UPDATE `attendance` SET `time_out` = '$t' WHERE `attendance`.`fullname` = '$fullname' AND `date_in` = '$d'");
+				$update = $pdo->prepare("UPDATE `attendance` SET `time_out` = '$t' WHERE `attendance`.`fullname` = '$fullname' AND `date_in` = '$d' AND `id` = '$id' ");
 				$update->execute();
 			} else {//login
 				$insert = $pdo->prepare("INSERT INTO `attendance`(`fullname`, `date_in`, `time_in`) VALUES (:fullname, :d, :t)");
