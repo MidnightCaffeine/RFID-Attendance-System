@@ -76,35 +76,7 @@ $page = "attendance_student";
                <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#addStudent">Export</button>
 
             </div>
-            <table id="studentTable" class="display table table-bordered">
-               <thead>
-                  <tr>
-                     <th>Name</th>
-                     <th>Date</th>
-                     <th>Time In</th>
-                     <th>Time Out</th>
-                  </tr>
-               </thead>
-               <tbody class="table-group-divider">
-                  <?php
-                  $select = $pdo->prepare("SELECT * FROM `attendance`");
-
-                  $select->execute();
-                  while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-                  ?>
-                     <?php 
-                     $date = date_create($row["date_in"]);
-                     $dateadded = date_format($date,"F d Y"); ?>
-                     <tr>
-                        <td><?php echo $row["fullname"]; ?></td>
-                        <td><?php echo $dateadded; ?></td>
-                        <td><?php echo $row["time_in"]; ?></td>
-                        <td><?php echo $row["time_out"]; ?></td>
-                     </tr> <?php
-                        }
-                           ?>
-               </tbody>
-            </table>
+            <div id="studentAttendanceTable"></div>
          </div>
       </section>
    </main>
@@ -122,6 +94,15 @@ $page = "attendance_student";
          });
       });
    </script>
+   <script>
+    $(document).ready(function(){
+		 $("#studentAttendanceTable").load("lib/student/attendance_table.lib.php");
+        setInterval(function() {
+            $("#studentAttendanceTable").load("lib/student/attendance_table.lib.php");
+        }, 2500);
+    });
+ 
+</script>
 
 
    <!-- add User Modal -->

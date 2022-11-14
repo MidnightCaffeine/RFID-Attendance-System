@@ -79,10 +79,13 @@ $page = "manage_student";
                <thead>
                   <tr>
                      <th>Student ID</th>
+                     <th>Lastname</th>
                      <th>Firstname</th>
                      <th>Middlename</th>
-                     <th>Lastname</th>
+                     <th>Phone</th>
+                     <th>Year Group</th>
                      <th>Department</th>
+                     <th>Section</th>
                      <th>Edit</th>
                      <th>Delete</th>
                   </tr>
@@ -96,12 +99,15 @@ $page = "manage_student";
                   ?>
                      <tr>
                         <td><?php echo $row["student_id"]; ?></td>
+                        <td><?php echo $row["student_lastname"]; ?></td>
                         <td><?php echo $row["student_firstname"]; ?></td>
                         <td><?php echo $row["student_middlename"]; ?></td>
-                        <td><?php echo $row["student_lastname"]; ?></td>
+                        <td><?php echo $row["phone"]; ?></td>
+                        <td><?php echo $row["year_group"]; ?></td>
                         <td><?php echo $row["department"]; ?></td>
+                        <td><?php echo $row["section"]; ?></td>
                         <td>
-                           <button name="edit" type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#updateStudent" data-toggle="tooltip" title="Edit"><i class="bi bi-pencil-square"></i></button>
+                           <a type="button" class="btn btn-primary ms-auto" href="editStudent.php?id=<?php echo $row["student_id"]; ?>" data-toggle="tooltip" title="Edit"><i class="bi bi-pencil-square"></i></a>
                         </td>
                         <td>
                            <form action="lib/student/deleteStudent.php" method="post">
@@ -144,10 +150,15 @@ $page = "manage_student";
          <div class="modal-content">
             <form id="addstudent" action="" method="post">
                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Student</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
+                  <div class="mb-3">
+                     <label for="formFile" class="form-label">Import from spreadsheet</label>
+                     <input class="form-control" type="file" id="formFile">
+                  </div>
+                  <hr id="hr1">
                   <fieldset>
                      <div class="row mb-2">
                         <div class="col-sm-5 col-md-6 mb-2">
@@ -199,8 +210,7 @@ $page = "manage_student";
                   </fieldset>
                </div>
                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button class="btn btn-primary" type="submit" name="btn_addStudent">Understood</button>
+                  <button class="btn btn-primary" type="submit" name="btn_addStudent">Add</button>
                </div>
             </form>
          </div>
