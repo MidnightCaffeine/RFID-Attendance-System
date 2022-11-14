@@ -8,8 +8,10 @@ if(isset($_POST['delete']))
     $delete->execute();
     $delete = $pdo->prepare("DELETE FROM `user_list` WHERE id='$id' ");
     if($delete->execute()){
-        echo '<script> alert("Data Deleted"); </script>';
-        header("location:../../home.php");
+        
+        $_SESSION['status'] = "dsuccess";
+
+        header("location:../../manage_student.php");
     }
     else{
         echo '<script> alert("Data Not Deleted"); </script>';

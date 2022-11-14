@@ -51,37 +51,8 @@ if (isset($_POST['btn_addStudent'])) {
             $insert->execute();
         }
 
-        echo '<script type="text/javascript">
-jQuery(function validation(){
-
-
-swal({
-title: "Good Job!",
-text: "Your Registration is Successfull",
-icon: "success",
-button: "Ok",
-});
-
-
-});
-
-</script>';
+        $_SESSION['status'] = "asuccess";
     } else {
-
-        echo '<script type="text/javascript">
-jQuery(function validation(){
-
-
-swal({
-title: "Error!",
-text: "Registration Fail !!!",
-icon: "error",
-button: "Ok",
-});
-
-
-});
-
-</script>';
+        $_SESSION['status'] = "error";
     }
 } // end if txtemail

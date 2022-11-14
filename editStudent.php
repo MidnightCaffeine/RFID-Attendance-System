@@ -18,7 +18,8 @@ if (isset($_POST['update'])) {
 
 	$update = $pdo->prepare("UPDATE `student_list` SET `student_firstname` = '$ufirstname', `student_middlename` = '$umiddlename', `student_lastname` = '$ulastname', `phone` = '$uphone', `year_group` = '$uyeargroup',  `section` = '$usection' WHERE `student_list`.`student_id` = '$uid'");
 	if($update->execute()){
-		
+		$_SESSION['status'] = "usuccess";
+
 	// Redirect to homepage to display updated user in list
 	header("Location: manage_student.php");
 	}
@@ -99,7 +100,9 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 					<li class="breadcrumb-item">Manage</li>
 					<li class="breadcrumb-item">Users</li>
 					<li class="breadcrumb-item">Student</li>
-					<li class="breadcrumb-item active"><?php echo $firstname . ' ' . $lastname ?> Data</li>
+					<li class="breadcrumb-item active"><?php 
+					echo $lastname.', '.$firstname.' '.substr($middlename, 0, 1).'.';;
+					?></li>
 				</ol>
 			</nav>
 		</div>

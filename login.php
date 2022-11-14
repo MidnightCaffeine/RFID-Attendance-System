@@ -25,6 +25,7 @@ if (isset($_POST['btn_login'])) {
             $_SESSION['username'] = $row['username'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['position'] = $row['position'];
+            $_SESSION['status'] = '';
     
             echo '<script type="text/javascript">
                     jQuery(function validation(){

@@ -36,6 +36,8 @@ $page = "manage_student";
    <script src="assets/js/quill.min.js"></script>
    <script src="assets/js/tinymce.min.js"></script>
    <script src="assets/js/main.js"></script>
+   <link href="assets/css/toastr.css" rel="stylesheet">
+   <script src="assets/js/toastr.min.js"></script>
 </head>
 
 <body>
@@ -48,6 +50,24 @@ $page = "manage_student";
    } elseif ($_SESSION["position"] == "Student") {
       include 'include/studentSideNavigation.php';
    }
+
+   if ($_SESSION['status'] ==  "usuccess") {
+      echo '<script type="text/javascript">
+      toastr.success("Chages are saved Successfully")
+      </script>';
+      $_SESSION['status'] = "";
+   } elseif ($_SESSION['status'] ==  "asuccess") {
+      echo '<script type="text/javascript">
+      toastr.success("Added Successfully")
+      </script>';
+      $_SESSION['status'] = "";
+   } elseif ($_SESSION['status'] ==  "dsuccess") {
+      echo '<script type="text/javascript">
+      toastr.success("Deleted Successfully")
+      </script>';
+      $_SESSION['status'] = "";
+   }
+
    ?>
    <main id="main" class="main">
       <div class="pagetitle">
