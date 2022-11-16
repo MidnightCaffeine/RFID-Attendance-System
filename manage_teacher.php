@@ -1,6 +1,6 @@
 <?php include_once 'lib/connection.php';
 session_start();
-include 'lib/student/addStudent.php';
+include 'lib/instructor/addTeacher.php';
 $page = "manage_teacher";
 ?>
 
@@ -29,13 +29,6 @@ $page = "manage_teacher";
    <link href="assets/css/quill.bubble.css" rel="stylesheet">
    <link href="assets/css/remixicon.css" rel="stylesheet">
    <link href="assets/css/style.css" rel="stylesheet">
-   <script src="assets/js/apexcharts.min.js"></script>
-   <script src="assets/js/bootstrap.bundle.min.js"></script>
-   <script src="assets/js/chart.min.js"></script>
-   <script src="assets/js/echarts.min.js"></script>
-   <script src="assets/js/quill.min.js"></script>
-   <script src="assets/js/tinymce.min.js"></script>
-   <script src="assets/js/main.js"></script>
 </head>
 
 <body>
@@ -72,7 +65,7 @@ $page = "manage_teacher";
                </div>
 
                <!-- add trigger modal -->
-               <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#addStudent">Add Teacher</button>
+               <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#addTeacher">Add Teacher</button>
 
             </div>
             <table id="studentTable" class="display table table-bordered">
@@ -139,15 +132,21 @@ $page = "manage_teacher";
 
    <!-- add User Modal -->
 
-   <div class="modal fade" id="addStudent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+   <div class="modal fade" id="addTeacher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
          <div class="modal-content">
-            <form id="addstudent" action="" method="post">
+            <form id="addteacher" action="" method="post">
                <div class="modal-header">
                   <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
+                  <div class="mb-3">
+                     <label for="formFile" class="form-label">Import from spreadsheet</label>
+                     <input class="form-control" type="file" id="formFile">
+                  </div>
+                  <hr id="hr1">
+                  <label class="mb-2">Or add manually</label>
                   <fieldset>
                      <div class="row mb-2">
                         <div class="col-sm-5 col-md-6 mb-2">
@@ -169,8 +168,8 @@ $page = "manage_teacher";
                      </div>
                      <div class="form-group mb-2">
                         <select name="position" id="position" class="form-select form-control" hidden>
-                           <option id="position-option" value="Student" selected>Student</option>
-                           <option id="position-option" value="Instructor">Instructor</option>
+                           <option id="position-option" value="Student">Student</option>
+                           <option id="position-option" value="Instructor" selected>Instructor</option>
                         </select>
                      </div>
                      <div class="form-group mb-2">
@@ -199,8 +198,7 @@ $page = "manage_teacher";
                   </fieldset>
                </div>
                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button class="btn btn-primary" type="submit" name="btn_addStudent">Understood</button>
+                  <button class="btn btn-primary" type="submit" name="btn_addInstructor">Add</button>
                </div>
             </form>
          </div>
@@ -208,7 +206,13 @@ $page = "manage_teacher";
    </div>
 
 
-
+   <script src="assets/js/apexcharts.min.js"></script>
+   <script src="assets/js/bootstrap.bundle.min.js"></script>
+   <script src="assets/js/chart.min.js"></script>
+   <script src="assets/js/echarts.min.js"></script>
+   <script src="assets/js/quill.min.js"></script>
+   <script src="assets/js/tinymce.min.js"></script>
+   <script src="assets/js/main.js"></script>
 </body>
 
 </html>

@@ -29,15 +29,6 @@ $page = "manage_student";
    <link href="assets/css/quill.bubble.css" rel="stylesheet">
    <link href="assets/css/remixicon.css" rel="stylesheet">
    <link href="assets/css/style.css" rel="stylesheet">
-   <script src="assets/js/apexcharts.min.js"></script>
-   <script src="assets/js/bootstrap.bundle.min.js"></script>
-   <script src="assets/js/chart.min.js"></script>
-   <script src="assets/js/echarts.min.js"></script>
-   <script src="assets/js/quill.min.js"></script>
-   <script src="assets/js/tinymce.min.js"></script>
-   <script src="assets/js/main.js"></script>
-   <link href="assets/css/toastr.css" rel="stylesheet">
-   <script src="assets/js/toastr.min.js"></script>
 </head>
 
 <body>
@@ -160,6 +151,7 @@ $page = "manage_student";
             }, ],
          });
       });
+      toastr.options.progressBar = true;
    </script>
 
 
@@ -179,6 +171,7 @@ $page = "manage_student";
                      <input class="form-control" type="file" id="formFile">
                   </div>
                   <hr id="hr1">
+                  <label class="mb-2">Or add manually</label>
                   <fieldset>
                      <div class="row mb-2">
                         <div class="col-sm-5 col-md-6 mb-2">
@@ -237,7 +230,15 @@ $page = "manage_student";
       </div>
    </div>
 
-
+   <script src="assets/js/apexcharts.min.js"></script>
+   <script src="assets/js/bootstrap.bundle.min.js"></script>
+   <script src="assets/js/chart.min.js"></script>
+   <script src="assets/js/echarts.min.js"></script>
+   <script src="assets/js/quill.min.js"></script>
+   <script src="assets/js/tinymce.min.js"></script>
+   <script src="assets/js/main.js"></script>
+   <link href="assets/css/toastr.css" rel="stylesheet">
+   <script src="assets/js/toastr.min.js"></script>
 
 </body>
 

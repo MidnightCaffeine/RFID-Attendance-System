@@ -29,13 +29,6 @@ $page = "attendance_student";
    <link href="assets/css/quill.bubble.css" rel="stylesheet">
    <link href="assets/css/remixicon.css" rel="stylesheet">
    <link href="assets/css/style.css" rel="stylesheet">
-   <script src="assets/js/apexcharts.min.js"></script>
-   <script src="assets/js/bootstrap.bundle.min.js"></script>
-   <script src="assets/js/chart.min.js"></script>
-   <script src="assets/js/echarts.min.js"></script>
-   <script src="assets/js/quill.min.js"></script>
-   <script src="assets/js/tinymce.min.js"></script>
-   <script src="assets/js/main.js"></script>
 </head>
 
 <body>
@@ -175,7 +168,13 @@ $page = "attendance_student";
       </div>
    </div>
 
-
+   <script src="assets/js/apexcharts.min.js"></script>
+   <script src="assets/js/bootstrap.bundle.min.js"></script>
+   <script src="assets/js/chart.min.js"></script>
+   <script src="assets/js/echarts.min.js"></script>
+   <script src="assets/js/quill.min.js"></script>
+   <script src="assets/js/tinymce.min.js"></script>
+   <script src="assets/js/main.js"></script>
 
 </body>
 
