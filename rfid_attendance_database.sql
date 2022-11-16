@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Nov 11, 2022 at 11:04 AM
+-- Generation Time: Nov 16, 2022 at 03:45 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -55,7 +55,8 @@ INSERT INTO `attendance` (`id`, `fullname`, `date_in`, `time_in`, `time_out`, `i
 (14, 'Jobert Gosuico Simbre', '2022-11-11', '17:47:25', '17:47:36', '', ''),
 (15, 'Jobert Gosuico Simbre', '2022-11-11', '17:47:44', '17:47:52', '', ''),
 (16, 'Jobert Gosuico Simbre', '2022-11-11', '17:47:54', '17:47:58', '', ''),
-(17, 'Jobert Gosuico Simbre', '2022-11-11', '17:48:10', NULL, '', '');
+(17, 'Jobert Gosuico Simbre', '2022-11-11', '17:48:10', NULL, '', ''),
+(18, 'Jobert Gosuico Simbre', '2022-11-14', '11:15:15', '11:15:27', '', '');
 
 -- --------------------------------------------------------
 
@@ -99,16 +100,17 @@ INSERT INTO `rfid` (`id`, `cardid`, `logdate`) VALUES
 CREATE TABLE `rfid_card` (
   `card_id` int(11) NOT NULL,
   `card_number` int(11) NOT NULL,
-  `status` tinytext NOT NULL
+  `status` tinytext NOT NULL,
+  `assigned_to` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `rfid_card`
 --
 
-INSERT INTO `rfid_card` (`card_id`, `card_number`, `status`) VALUES
-(1, 1390710, ''),
-(2, 2348130, '');
+INSERT INTO `rfid_card` (`card_id`, `card_number`, `status`, `assigned_to`) VALUES
+(1, 1390710, '', ''),
+(2, 2348130, '', '');
 
 -- --------------------------------------------------------
 
@@ -132,6 +134,7 @@ CREATE TABLE `student_list` (
   `student_firstname` tinytext NOT NULL,
   `student_middlename` tinytext NOT NULL,
   `student_lastname` tinytext NOT NULL,
+  `phone` tinytext NOT NULL,
   `year_group` tinyint(4) DEFAULT NULL,
   `department` tinytext DEFAULT NULL,
   `section` tinytext DEFAULT NULL,
@@ -142,9 +145,10 @@ CREATE TABLE `student_list` (
 -- Dumping data for table `student_list`
 --
 
-INSERT INTO `student_list` (`student_id`, `student_firstname`, `student_middlename`, `student_lastname`, `year_group`, `department`, `section`, `image`) VALUES
-(85, 'Jobert', 'Gosuico', 'Simbre', NULL, 'BSIT', NULL, NULL),
-(100, 'Student', 'Uno', 'One', NULL, 'BSIT', NULL, NULL);
+INSERT INTO `student_list` (`student_id`, `student_firstname`, `student_middlename`, `student_lastname`, `phone`, `year_group`, `department`, `section`, `image`) VALUES
+(85, 'Jobert', 'Gosuico', 'Simbre', '09163218023', 4, 'BSIT', 'AP', NULL),
+(110, 'Jobert', 'Unos', 'Simbre', '', NULL, 'BSIT', NULL, NULL),
+(111, 'Jobert', 'Unos', 'Simbre', '', NULL, 'BSIT', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -174,6 +178,13 @@ CREATE TABLE `teacher_list` (
   `image` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `teacher_list`
+--
+
+INSERT INTO `teacher_list` (`teacher_id`, `teacher_firstname`, `teacher_middlename`, `teacher_lastname`, `subject_taught`, `department`, `rfid_card_id`, `image`) VALUES
+(112, 'Jobert', 'Gosuico', 'Simbre', NULL, 'BSIT', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -197,7 +208,9 @@ CREATE TABLE `user_list` (
 INSERT INTO `user_list` (`id`, `username`, `password`, `email`, `create_at`, `position`, `card_number`) VALUES
 (57, 'admin', '$2y$10$jCBPKsCOVo6LKlMHZDOZdOHQ.7Lo3Z2e6ZkLyeYDxI63f7qOfZE0K', 'admin@example.com', '2022-11-01 05:24:14', 'Administrator', 0),
 (85, 'qwertys', '$2y$10$WfEkBJBwC3M15dr7V3mI7uZKACqs7xvEIRsFGOmJsDfOagmWf8EPy', 'jobert.simbre14@gmail.com', '2022-11-01 05:23:44', 'Student', 2348130),
-(100, 'student1', '$2y$10$7s74YKI7a4enaGpkUvDCv.UFzZCdZhuemZlxZCZO5u2vJV7g8LXFu', 'student1@example.com', '2022-11-10 13:15:46', 'Student', 0);
+(110, 'qwertys', '$2y$10$91Zp1P9k/2Gv.5X81dmEqO4686E2w3T.WMoE4Ar238JkzA86Unn1u', 'ds14@gmail.com', '2022-11-14 13:38:24', 'Student', 0),
+(111, 'qwertys', '$2y$10$s1xKTkCK6tVZ0tc6YYj0NO6jWwfOMy/d5aah/HwSb0y44mQ59jE5e', 'ds14@gmail.com', '2022-11-14 13:38:30', 'Student', 0),
+(112, 'student112', '$2y$10$IdMRLy901/MBIZ6wl5Ntm.I/5WX/VrzLJUYHRFCqWUKTb71Gb1Hea', 'asdasdas@gmail.com', '2022-11-14 13:39:21', 'Instructor', 0);
 
 --
 -- Indexes for dumped tables
@@ -268,7 +281,7 @@ ALTER TABLE `user_list`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `rfid`
@@ -292,7 +305,7 @@ ALTER TABLE `subject_list`
 -- AUTO_INCREMENT for table `user_list`
 --
 ALTER TABLE `user_list`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- Constraints for dumped tables
