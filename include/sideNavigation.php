@@ -35,8 +35,8 @@
             <li> <a class="<?= $page == 'manage_student' ? 'active' : '' ?>" href="manage_student.php"><i class='bx bxs-right-arrow'></i><span>Students</span> </a></li>
             <li> <a class="<?= $page == 'manage_teacher' ? 'active' : '' ?>" href="manage_teacher.php"><i class='bx bxs-right-arrow'></i><span>Instructors</span></a></li>
             <li class="nav-heading">Device</li>
-            <li> <a href="components-alerts.html"><i class='bx bxs-right-arrow'></i><span>RFID Card</span> </a></li>
-            <li> <a href="components-accordion.html"><i class='bx bxs-right-arrow'></i><span>Department</span></a></li>
+            <li> <a href="rfid_cards.php"><i class='bx bxs-right-arrow'></i><span>RFID Card</span> </a></li>
+
          </ul>
       </li>
       <li class="nav-item">

@@ -19,14 +19,25 @@ if (isset($_POST['btn_login'])) {
 
     $row = $select->fetch(PDO::FETCH_ASSOC);
 
-    if(password_verify($password,$row['password'])){
+    if (password_verify($password, $row['password'])) {
         if ($row['email'] == $useremail or $row['username'] == $useremail) {
-
+            $_SESSION['myid'] = $row['id'];
+            $id = $row['id'];
             $_SESSION['username'] = $row['username'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['position'] = $row['position'];
             $_SESSION['status'] = '';
-    
+
+            if ($row["position"] == "Student") {
+                $selectYou = $pdo->prepare("SELECT * from `student_list` where student_id = '$id'");
+                $selectYou->execute();
+                while ($row = $selectYou->fetch(PDO::FETCH_ASSOC)) {
+                    $firstname = $row["student_firstname"];
+                    $mname = $row["student_middlename"];
+                    $lname = $row["student_lastname"];
+                }
+                $_SESSION['fullname'] = $firstname . " " . $mname . " " . $lname;
+            }
             echo '<script type="text/javascript">
                     jQuery(function validation(){
                     
@@ -40,11 +51,10 @@ if (isset($_POST['btn_login'])) {
                     
                     });
                   </script>';
-    
+
             header('refresh:2;home.php');
         }
-    }
-     else {
+    } else {
 
         echo '<script type="text/javascript">
                 jQuery(function validation(){
@@ -70,7 +80,7 @@ if (isset($_POST['btn_login'])) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link href="assets/img/ascot logo.png" rel="icon">
+    <link href="assets/img/ascotLogo.png" rel="icon">
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/material-design-icons.min.css" />
@@ -85,16 +95,16 @@ if (isset($_POST['btn_login'])) {
     <main>
         <div class="container-fluid">
             <div class="row">
-            <div class="col-sm-6 px-0 d-none d-sm-block thumbnail text-center">
-                <?php 
-                $imagesDir = 'assets/img/bg/';
+                <div class="col-sm-6 px-0 d-none d-sm-block thumbnail text-center">
+                    <?php
+                    $imagesDir = 'assets/img/bg/';
 
-                $images = glob($imagesDir . '*.{jpg,jpeg,png,gif}', GLOB_BRACE);
-                
-                $randomImage = $images[array_rand($images)];
-                
-                ?>
-                    <img src="<?php echo $randomImage;?>" alt="Random Images" class="login-img" />
+                    $images = glob($imagesDir . '*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+
+                    $randomImage = $images[array_rand($images)];
+
+                    ?>
+                    <img src="<?php echo $randomImage; ?>" alt="Random Images" class="login-img" />
                     <div class="caption">
                         <img src="assets/img/ascotLogo.png" alt="logo" class="logo animate__animated animate__bounce" />
                         <h3>ASCOT RFID Class Attendance Monitoring and Student Profiling system</h3>

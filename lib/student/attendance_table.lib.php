@@ -16,27 +16,35 @@ $d = date("Y-m-d");
     </thead>
     <tbody class="table-group-divider">
         <?php
-        $select = $pdo->prepare("SELECT * FROM `attendance` WHERE `date_in` = '$d'");
+        $id = $_SESSION['myid'];
+        $selectYou = $pdo->prepare("SELECT * from `student_list` where student_id = '$id'");
+        $selectYou->execute();
+		while ($row = $selectYou->fetch(PDO::FETCH_ASSOC)) {
+			$firstname = $row["student_firstname"];
+			$mname = $row["student_middlename"];
+			$lname = $row["student_lastname"];
+		}
+		$fullname = $firstname . " " . $mname . " " . $lname;
+        if ($_SESSION["position"] == "Student") {
+            $select = $pdo->prepare("SELECT * FROM `attendance` WHERE `fullname` = '$fullname' ");
+        }else{
+            $select = $pdo->prepare("SELECT * FROM `attendance` WHERE `date_in` = '$d'");
+        }
 
         $select->execute();
         $num = 0;
         while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
             $num++;
             $date = date_create($row["date_in"]);
-            $ti = date_create($row["time_in"]);
-            $to = date_create($row["time_out"]);
-            $dateadded = date_format($date, "F d Y");
-            $time_in = date_format($to, "h:i A");
-            $time_out = date_format($to, "h:i A");
+            $dateadded = date_format($date, "F,d Y");
 
         ?>
-
             <tr>
-                <td><?php echo $num."."; ?></td>
+                <td><?php echo $row["id"]; ?></td>
                 <td><?php echo $row["fullname"]; ?></td>
                 <td><?php echo $dateadded; ?></td>
-                <td><?php echo $time_in; ?></td>
-                <td><?php echo $time_out; ?></td>
+                <td><?php echo $row["time_in"]; ?></td>
+                <td><?php echo $row["time_out"]; ?></td>
             </tr> <?php
 
                 }

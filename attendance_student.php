@@ -45,25 +45,31 @@ $page = "attendance_student";
    ?>
    <main id="main" class="main">
       <div class="pagetitle">
-         <h1>Student Attendance</h1>
+         <?php
+         if ($_SESSION["position"] == "Student") {
+            echo  "<h1>My Attendance</h1>";
+         } else {
+            echo  "<h1>Student Attendance</h1>";
+         }
+         ?>
+
          <nav>
             <ol class="breadcrumb">
                <li class="breadcrumb-item"><a href="home.php">Home</a></li>
                <li class="breadcrumb-item">Attendance</li>
-               <li class="breadcrumb-item active">Students</li>
+               <li class="breadcrumb-item active"> <?php
+                                                   if ($_SESSION["position"] == "Student") {
+                                                      echo  $_SESSION['fullname'];
+                                                   } else {
+                                                      echo  "Student Attendance";
+                                                   }
+                                                   ?></li>
             </ol>
          </nav>
       </div>
       <section class="section dashboard">
          <div class="row">
             <div class="d-flex align-items-center mt-3 mb-2">
-               <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort</button>
-                  <ul class="dropdown-menu">
-                     <li><a href="#" class="dropdown-item">BSIT AP3</a></li>
-                     <li><a href="#" class="dropdown-item">BSIT AP4</a></li>
-                  </ul>
-               </div>
 
                <!-- add trigger modal -->
                <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#addStudent">Export</button>
@@ -88,14 +94,13 @@ $page = "attendance_student";
       });
    </script>
    <script>
-    $(document).ready(function(){
-		 $("#studentAttendanceTable").load("lib/student/attendance_table.lib.php");
-        setInterval(function() {
+      $(document).ready(function() {
+         $("#studentAttendanceTable").load("lib/student/attendance_table.lib.php");
+         setInterval(function() {
             $("#studentAttendanceTable").load("lib/student/attendance_table.lib.php");
-        }, 2500);
-    });
- 
-</script>
+         }, 2500);
+      });
+   </script>
 
 
    <!-- add User Modal -->
