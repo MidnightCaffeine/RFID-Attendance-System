@@ -6,7 +6,7 @@
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img src="assets/img/profile-img.png" alt="Profile" class="rounded-circle"> <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $_SESSION["username"] ?></span> </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                <li class="dropdown-header">
-                  <h6><?php echo $_SESSION["username"] ?></h6>
+                  <h6><?php echo $_SESSION["fullname"] ?></h6>
                   <span><?php echo $_SESSION["position"] ?></span>
                </li>
                <li>

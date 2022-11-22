@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Manila');
 $d = date("Y-m-d");
 ?>
 
-<table id="studentTable" class="display table table-bordered table-striped">
+<table id="instructorTable" class="display table table-bordered table-striped">
     <thead>
         <tr>
             <th></th>
@@ -12,28 +12,22 @@ $d = date("Y-m-d");
             <th>Date</th>
             <th>Time In</th>
             <th>Time Out</th>
-            <th>Remark</th>
-            <th>Instructor</th>
-            <th>Suhject</th>
         </tr>
     </thead>
     <tbody class="table-group-divider">
         <?php
         $id = $_SESSION['myid'];
-        $selectYou = $pdo->prepare("SELECT * from `student_list` where student_id = '$id'");
+        $selectYou = $pdo->prepare("SELECT * from `teacher_list` where teacher_id = '$id'");
         $selectYou->execute();
 		while ($row = $selectYou->fetch(PDO::FETCH_ASSOC)) {
-			$firstname = $row["student_firstname"];
-			$mname = $row["student_middlename"];
-			$lname = $row["student_lastname"];
+			$firstname = $row["teacher_firstname"];
+			$mname = $row["teacher_middlename"];
+			$lname = $row["teacher_lastname"];
             $fullname = $firstname . " " . $mname . " " . $lname;
 		}
 
-        if ($_SESSION["position"] == "Student") {
-            $select = $pdo->prepare("SELECT * FROM `attendance` WHERE `fullname` = '$fullname' ");
-        }else{
-            $select = $pdo->prepare("SELECT * FROM `attendance` WHERE `date_in` = '$d'");
-        }
+            $select = $pdo->prepare("SELECT * FROM `attendance_instructor` WHERE `date_in` = '$d'");
+
 
         $select->execute();
         $num = 0;
@@ -49,9 +43,6 @@ $d = date("Y-m-d");
                 <td><?php echo $dateadded; ?></td>
                 <td><?php echo $row["time_in"]; ?></td>
                 <td><?php echo $row["time_out"]; ?></td>
-                <td><?php echo $row["remark"]; ?></td>
-                <td><?php echo $row["instructor"]; ?></td>
-                <td><?php echo $row["subject"]; ?></td>
             </tr> <?php
 
                 }

@@ -1,27 +1,25 @@
 <?php
 session_start();
-$page = "edit_student";
+$page = "edit_cards";
 // include database connection file
 include_once("lib/connection.php");
 
 // Check if form is submitted for user update, then redirect to homepage after update
-if (isset($_POST['update'])) {
+if (isset($_POST['rfid_update'])) {
 	$uid = $_POST['uid'];
 
+	$cardId = $_POST['cardId'];
+	$cardNumber = $_POST['cardNumber'];
+	$cardStatus = $_POST['cardStatus'];
+	$cardHolderId = $_POST['cardHolderId'];
+	$cardHolder = $_POST['cardHolder'];
 
-	$ufirstname = ucwords(strtolower($_POST['firstname']));
-	$ulastname = ucwords(strtolower($_POST['lastname']));
-	$umiddlename = ucwords(strtolower($_POST['middlename']));
-	$uphone = $_POST['phone'];
-	$uyeargroup = $_POST['yeargroup'];
-	$usection = $_POST['section'];
-
-	$update = $pdo->prepare("UPDATE `student_list` SET `student_firstname` = '$ufirstname', `student_middlename` = '$umiddlename', `student_lastname` = '$ulastname', `phone` = '$uphone', `year_group` = '$uyeargroup',  `section` = '$usection' WHERE `student_list`.`student_id` = '$uid'");
-	if($update->execute()){
+	$update = $pdo->prepare("UPDATE `rfid_card` SET `card_id` = '$uid' , `card_number` = '$cardNumber' , `card_status` = '$cardStatus' , `card_holder` = '$cardHolder' , `card_holder_id` = '$cardHolderId' WHERE `rfid_card`.`cardId` = '$uid'");
+	if ($update->execute()) {
 		$_SESSION['status'] = "usuccess";
 
-	// Redirect to homepage to display updated user in list
-	header("Location: manage_student.php");
+		// Redirect to cardpage to display updated card in list
+
 	}
 
 }
@@ -33,17 +31,15 @@ $id = $_GET['id'];
 
 // Fetech user data based on id
 
-$select = $pdo->prepare("SELECT * FROM student_list WHERE `student_id` = '$id' ");
+$select = $pdo->prepare("SELECT * FROM rfid_card WHERE `card_id` = '$id' ");
 
 $select->execute();
 while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-
-	$firstname = $row['student_firstname'];
-	$lastname = $row['student_lastname'];
-	$middlename = $row['student_middlename'];
-	$phone = $row['phone'];
-	$yeargroup = $row['year_group'];
-	$section = $row['section'];
+	$cardId = $row['card_id'];
+	$cardNumber = $row['card_number'];
+	$cardStatus = $row['card_status'];
+	$cardHolder = $row['card_holder'];
+	$cardHolderId = $row['card_holder_id'];
 }
 ?>
 
@@ -53,7 +49,7 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 <head>
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<title><?php echo $lastname.', '.$firstname.' '.substr($middlename, 0, 1).'.'?> Data</title>
+	<title>Edit Card <?php echo $cardId?></title>
 	<meta name="robots" content="noindex, nofollow">
 	<meta content="" name="description">
 	<meta content="" name="keywords">
@@ -94,15 +90,15 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 	?>
 	<main id="main" class="main">
 		<div class="pagetitle">
-			<h1>Edit Student</h1>
+			<h1>Edit Card</h1>
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">Manage</li>
-					<li class="breadcrumb-item">Users</li>
-					<li class="breadcrumb-item">Student</li>
-					<li class="breadcrumb-item active"><?php 
-					echo $lastname.', '.$firstname.' '.substr($middlename, 0, 1).'.';
-					?></li>
+					<li class="breadcrumb-item">Device</li>
+					<li class="breadcrumb-item">RFID Cards</li>
+					<li class="breadcrumb-item active"><?php
+														echo "Card " . $id;
+														?></li>
 				</ol>
 			</nav>
 		</div>
@@ -117,41 +113,27 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 						<div class="row mb-2">
 							<div class="col-sm-5 col-md-6 mb-2">
 								<div class="form-group">
-									<label for="firstname">Firstname</label>
-									<input type="text" name="firstname" class="form-control" value="<?php echo $firstname ?>" required />
+									<label for="cardId">Card ID</label>
+									<input type="text" name="cardId" class="form-control" value="<?php echo $cardId ?>" required disabled />
 								</div>
 							</div>
 							<div class="col-sm-5 col-md-6 mb-2">
 								<div class="form-group">
-									<label for="lastname">Lastname</label>
-									<input type="text" name="lastname" class="form-control" value="<?php echo $lastname ?>" required />
+									<label for="cardNumber">Card Number</label>
+									<input type="text" name="cardNumber" class="form-control" value="<?php echo $cardNumber ?>" required disabled/>
 								</div>
 							</div>
 						</div>
 						<div class="form-group mb-2">
-							<label for="middlename">Middlename</label>
-							<input type="middlename" name="middlename" class="form-control" value="<?php echo $middlename ?>" />
+							<label for="cardStatus">Card Status</label>
+							<input type="middlename" name="cardStatus" class="form-control" value="<?php echo $cardStatus ?>" disabled/>
 						</div>
 						<div class="form-group mb-2">
-							<label for="phone">Phone</label>
-							<input type="text" name="phone" class="form-control" value="<?php echo $phone ?>" />
-						</div>
-						<div class="row mb-2">
-							<div class="col-sm-5 col-md-6 mb-2">
-								<div class="form-group">
-									<label for="yeargroup">Year Group</label>
-									<input type="text" name="yeargroup" class="form-control" value="<?php echo $yeargroup ?>" required />
-								</div>
-							</div>
-							<div class="col-sm-5 col-md-6 mb-2">
-								<div class="form-group">
-									<label for="section">Section</label>
-									<input type="text" name="section" class="form-control" value="<?php echo $section ?>" required />
-								</div>
-							</div>
+							<label for="cardHolder">Card Holder</label>
+							<input type="text" name="cardHolder" class="form-control" value="<?php echo $cardHolder ?>" />
 						</div>
 						<input type="text" name="uid" hidden value="<?php echo $id; ?>">
-						<input class="btn btn-primary ms-auto" type="submit" name="update" value="Save Changes">
+						<input class="btn btn-primary ms-auto" type="submit" name="rfid_update" value="Save Changes">
 					</fieldset>
 				</form>
 			</div>

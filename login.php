@@ -37,6 +37,17 @@ if (isset($_POST['btn_login'])) {
                     $lname = $row["student_lastname"];
                 }
                 $_SESSION['fullname'] = $firstname . " " . $mname . " " . $lname;
+            }elseif ($row["position"] == "Instructor") {
+                $selectYou = $pdo->prepare("SELECT * from `teacher_list` where teacher_id = '$id'");
+                $selectYou->execute();
+                while ($row = $selectYou->fetch(PDO::FETCH_ASSOC)) {
+                    $firstname = $row["teacher_firstname"];
+                    $mname = $row["teacher_middlename"];
+                    $lname = $row["teacher_lastname"];
+                }
+                $_SESSION['fullname'] = $firstname . " " . $mname . " " . $lname;
+            }else{
+                $_SESSION['fullname'] = "Admin"; 
             }
             echo '<script type="text/javascript">
                     jQuery(function validation(){
@@ -52,7 +63,7 @@ if (isset($_POST['btn_login'])) {
                     });
                   </script>';
 
-            header('refresh:2;home.php');
+            header('refresh:1;home.php');
         }
     } else {
 

@@ -14,7 +14,7 @@
       <li class="nav-item">
          <a class="nav-link
          <?php
-         if ($page == "manage_student" || $page == "manage_teacher" || $page == "rfid_card" || $page == "manage_department") {
+         if ($page == "manage_student" || $page == "manage_teacher" || $page == "rfid_card" || $page == "manage_department" || $page == 'edit_student') {
             echo "";
          } else {
             echo " collapsed";
@@ -25,17 +25,17 @@
             <i class="bi bi-chevron-down ms-auto"></i>
          </a>
          <ul id="components-nav" class="nav-content<?php
-                                                   if ($page == "manage_student" || $page == "manage_teacher" || $page == "rfid_card" || $page == "manage_department") {
+                                                   if ($page == "manage_student" || $page == "manage_teacher" || $page == "rfid_card" || $page == "manage_department" || $page == 'edit_student') {
                                                       echo "";
                                                    } else {
                                                       echo " collapse";
                                                    }
                                                    ?> " data-bs-parent="#sidebar-nav">
             <li class="nav-heading">Users</li>
-            <li> <a class="<?= $page == 'manage_student' ? 'active' : '' ?>" href="manage_student.php"><i class='bx bxs-right-arrow'></i><span>Students</span> </a></li>
+            <li> <a class="<?= $page == 'manage_student' || $page == 'edit_student' ? 'active' : '' ?>" href="manage_student.php"><i class='bx bxs-right-arrow'></i><span>Students</span> </a></li>
             <li> <a class="<?= $page == 'manage_teacher' ? 'active' : '' ?>" href="manage_teacher.php"><i class='bx bxs-right-arrow'></i><span>Instructors</span></a></li>
             <li class="nav-heading">Device</li>
-            <li> <a href="rfid_cards.php"><i class='bx bxs-right-arrow'></i><span>RFID Card</span> </a></li>
+            <li> <a class="<?= $page == 'rfid_card' ? 'active' : '' ?>" href="rfid_cards.php"><i class='bx bxs-right-arrow'></i><span>RFID Card</span> </a></li>
 
          </ul>
       </li>
