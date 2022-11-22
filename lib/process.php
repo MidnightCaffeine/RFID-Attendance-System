@@ -62,6 +62,8 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 			$insert->bindParam(":instructor", $current_instructor);
 			$insert->execute();
 			echo "success";
+		}else{
+			echo "error";
 		}
 	} elseif ($row["position"] == "Instructor") {
 
