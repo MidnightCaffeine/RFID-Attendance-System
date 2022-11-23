@@ -71,7 +71,7 @@ $page = "attendance_instuctor";
             <div class="d-flex align-items-center mt-3 mb-2">
 
                <!-- add trigger modal -->
-               <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#addStudent">Export</button>
+               <button type="button" class="btn btn-success ms-auto" data-bs-toggle="modal" data-bs-target="#addStudent">Export</button>
 
             </div>
             <div id="instructorTable"></div>

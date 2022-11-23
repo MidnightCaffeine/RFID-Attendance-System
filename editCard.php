@@ -14,12 +14,12 @@ if (isset($_POST['rfid_update'])) {
 	$cardHolderId = $_POST['cardHolderId'];
 	$cardHolder = $_POST['cardHolder'];
 
-	$update = $pdo->prepare("UPDATE `rfid_card` SET `card_id` = '$uid' , `card_number` = '$cardNumber' , `card_status` = '$cardStatus' , `card_holder` = '$cardHolder' , `card_holder_id` = '$cardHolderId' WHERE `rfid_card`.`cardId` = '$uid'");
+	$update = $pdo->prepare("UPDATE `rfid_card` SET `card_id` = '$uid' , `card_number` = '$cardNumber' , `card_status` = '$cardStatus' , `card_holder` = '$cardHolder' , `card_holder_id` = '$cardHolderId' WHERE `rfid_card`.`card_id` = '$uid'");
 	if ($update->execute()) {
 		$_SESSION['status'] = "usuccess";
 
 		// Redirect to cardpage to display updated card in list
-
+		header("Location: rfid_cards.php");
 	}
 
 }
@@ -108,29 +108,29 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 					<a type="button" class="btn btn-primary ms-auto mb-2" href="manage_student.php"><i class='bx bx-arrow-back'></i> Back</a>
 				</div>
 
-				<form name="update_user" method="post" action="editStudent.php">
+				<form name="update_user" method="POST" action="editCard.php">
 					<fieldset>
 						<div class="row mb-2">
 							<div class="col-sm-5 col-md-6 mb-2">
 								<div class="form-group">
 									<label for="cardId">Card ID</label>
-									<input type="text" name="cardId" class="form-control" value="<?php echo $cardId ?>" required disabled />
+									<input type="text" id="cardId" name="cardId" class="form-control" value="<?php echo $cardId ?>" required  />
 								</div>
 							</div>
 							<div class="col-sm-5 col-md-6 mb-2">
 								<div class="form-group">
 									<label for="cardNumber">Card Number</label>
-									<input type="text" name="cardNumber" class="form-control" value="<?php echo $cardNumber ?>" required disabled/>
+									<input type="text" id="cardNumber" name="cardNumber" class="form-control" value="<?php echo $cardNumber ?>" required />
 								</div>
 							</div>
 						</div>
 						<div class="form-group mb-2">
 							<label for="cardStatus">Card Status</label>
-							<input type="middlename" name="cardStatus" class="form-control" value="<?php echo $cardStatus ?>" disabled/>
+							<input type="middlename" id="cardStatus" name="cardStatus" class="form-control" value="<?php echo $cardStatus ?>" />
 						</div>
 						<div class="form-group mb-2">
 							<label for="cardHolder">Card Holder</label>
-							<input type="text" name="cardHolder" class="form-control" value="<?php echo $cardHolder ?>" />
+							<input type="text" id="cardHolder" name="cardHolder" class="form-control" value="<?php echo $cardHolder ?>" />
 						</div>
 						<input type="text" name="uid" hidden value="<?php echo $id; ?>">
 						<input class="btn btn-primary ms-auto" type="submit" name="rfid_update" value="Save Changes">
