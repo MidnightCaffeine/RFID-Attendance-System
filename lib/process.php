@@ -21,6 +21,7 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 			$firstname = $row["student_firstname"];
 			$mname = $row["student_middlename"];
 			$lname = $row["student_lastname"];
+			$guardianEmail = $row["guardian_email"];
 		}
 		$fullname = $firstname . " " . $mname . " " . $lname;
 
@@ -52,6 +53,7 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 			$insert->bindParam(":remark", $remark[1]);
 			$insert->bindParam(":instructor", $current_instructor);
 			$insert->execute();
+			mail($guardianEmail,"Student entered classroom", "Your Son/Daughter Entered Class");
 			echo "success";
 		} elseif ($t < date('H:i:s', strtotime($teacher_login . ' +15 minutes'))) { //login
 			$insert = $pdo->prepare("INSERT INTO `attendance`(`fullname`, `date_in`, `time_in`,`time_out`,`remark`,`instructor`) VALUES (:fullname, :d, :t, '0',:remark,:instructor)");
@@ -61,6 +63,7 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 			$insert->bindParam(":remark", $remark[0]);
 			$insert->bindParam(":instructor", $current_instructor);
 			$insert->execute();
+			mail($guardianEmail,"Student entered classroom", "Your Son/Daughter Entered Class");
 			echo "success";
 		}else{
 			echo "error";

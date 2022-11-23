@@ -21,7 +21,6 @@ if (isset($_POST['rfid_update'])) {
 		// Redirect to cardpage to display updated card in list
 		header("Location: rfid_cards.php");
 	}
-
 }
 ?>
 <?php
@@ -49,7 +48,7 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 <head>
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<title>Edit Card <?php echo $cardId?></title>
+	<title>Edit Card <?php echo $cardId ?></title>
 	<meta name="robots" content="noindex, nofollow">
 	<meta content="" name="description">
 	<meta content="" name="keywords">
@@ -57,10 +56,6 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 	<link href="https://fonts.gstatic.com" rel="preconnect">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-	<script type="text/javascript" charset="utf8" src="assets/js/jquery-3.4.1.min.js"></script>
-	<script src="assets/js/jquery.validate.js"></script>
-	<script type="text/javascript" charset="utf8" src="assets/js/datatable.js"></script>
-	<script type="text/javascript" charset="utf8" src="assets/js/dataTables.bootstrap5.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="assets/css/dataTables.bootstrap5.min.css">
 	<link href="assets/css/bootstrap-icons.css" rel="stylesheet">
 	<link href="assets/css/boxicons.min.css" rel="stylesheet">
@@ -68,13 +63,6 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 	<link href="assets/css/quill.bubble.css" rel="stylesheet">
 	<link href="assets/css/remixicon.css" rel="stylesheet">
 	<link href="assets/css/style.css" rel="stylesheet">
-	<script src="assets/js/apexcharts.min.js"></script>
-	<script src="assets/js/bootstrap.bundle.min.js"></script>
-	<script src="assets/js/chart.min.js"></script>
-	<script src="assets/js/echarts.min.js"></script>
-	<script src="assets/js/quill.min.js"></script>
-	<script src="assets/js/tinymce.min.js"></script>
-	<script src="assets/js/main.js"></script>
 </head>
 
 <body>
@@ -114,7 +102,7 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 							<div class="col-sm-5 col-md-6 mb-2">
 								<div class="form-group">
 									<label for="cardId">Card ID</label>
-									<input type="text" id="cardId" name="cardId" class="form-control" value="<?php echo $cardId ?>" required  />
+									<input type="text" id="cardId" name="cardId" class="form-control" value="<?php echo $cardId ?>" required />
 								</div>
 							</div>
 							<div class="col-sm-5 col-md-6 mb-2">
@@ -143,6 +131,18 @@ while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 		<div class="copyright"> &copy; Copyright <strong><span>Midnight Coffee</span></strong>. All Rights Reserved</div>
 	</footer>
 	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+	<script type="text/javascript" charset="utf8" src="assets/js/jquery-3.4.1.min.js"></script>
+	<script src="assets/js/jquery.validate.js"></script>
+	<script type="text/javascript" charset="utf8" src="assets/js/datatable.js"></script>
+	<script type="text/javascript" charset="utf8" src="assets/js/dataTables.bootstrap5.min.js"></script>
+	<script src="assets/js/apexcharts.min.js"></script>
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/js/chart.min.js"></script>
+	<script src="assets/js/echarts.min.js"></script>
+	<script src="assets/js/quill.min.js"></script>
+	<script src="assets/js/tinymce.min.js"></script>
+	<script src="assets/js/main.js"></script>
 </body>
 
 </html>
