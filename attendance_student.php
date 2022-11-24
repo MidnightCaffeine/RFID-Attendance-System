@@ -2,6 +2,12 @@
 session_start();
 include 'lib/student/addStudent.php';
 $page = "attendance_student";
+if ($_SESSION['username'] == '' && $_SESSION['position'] != 'Administrator' || $_SESSION['position'] != 'Instructor') {
+   session_unset();
+   session_write_close();
+   session_destroy();
+   header("Location: index.php");
+}
 ?>
 
 <!DOCTYPE html>

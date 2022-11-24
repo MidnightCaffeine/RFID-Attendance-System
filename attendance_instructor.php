@@ -1,6 +1,12 @@
 <?php include_once 'lib/connection.php';
 session_start();
 $page = "attendance_instuctor";
+if ($_SESSION['username'] == '' && $_SESSION['position'] != 'Administrator' || $_SESSION['position'] != 'Instructor') {
+   session_unset();
+   session_write_close();
+   session_destroy();
+   header("Location: index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +46,19 @@ $page = "attendance_instuctor";
    } elseif ($_SESSION["position"] == "Student") {
       include 'include/studentSideNavigation.php';
    }
-
+   if ($_SESSION['status'] ==  "usuccess") {
+      echo '<script type="text/javascript">
+      toastr.success("Chages are saved Successfully")
+      </script>';
+   } elseif ($_SESSION['status'] ==  "asuccess") {
+      echo '<script type="text/javascript">
+      toastr.success("Added Successfully")
+      </script>';
+   } elseif ($_SESSION['status'] ==  "dsuccess") {
+      echo '<script type="text/javascript">
+      toastr.success("Deleted Successfully")
+      </script>';
+   }
    ?>
    <main id="main" class="main">
       <div class="pagetitle">
@@ -71,7 +89,7 @@ $page = "attendance_instuctor";
             <div class="d-flex align-items-center mt-3 mb-2">
 
                <!-- add trigger modal -->
-               <button type="button" class="btn btn-success ms-auto" data-bs-toggle="modal" data-bs-target="#addStudent">Export</button>
+               <button type="button" class="btn btn-success ms-auto" name="exportInstructorAttendance">Export</button>
 
             </div>
             <div id="instructorTable"></div>

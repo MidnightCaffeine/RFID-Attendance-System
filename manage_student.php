@@ -2,6 +2,12 @@
 session_start();
 include 'lib/student/addStudent.php';
 $page = "manage_student";
+if ($_SESSION['username'] == '' && $_SESSION['position'] != 'Administrator' || $_SESSION['position'] != 'Instructor') {
+   session_unset();
+   session_write_close();
+   session_destroy();
+   header("Location: index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -46,17 +52,14 @@ $page = "manage_student";
       echo '<script type="text/javascript">
       toastr.success("Chages are saved Successfully")
       </script>';
-      $_SESSION['status'] = "";
    } elseif ($_SESSION['status'] ==  "asuccess") {
       echo '<script type="text/javascript">
       toastr.success("Added Successfully")
       </script>';
-      $_SESSION['status'] = "";
    } elseif ($_SESSION['status'] ==  "dsuccess") {
       echo '<script type="text/javascript">
       toastr.success("Deleted Successfully")
       </script>';
-      $_SESSION['status'] = "";
    }
 
    ?>
@@ -165,11 +168,14 @@ $page = "manage_student";
                   <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Student</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
-               <div class="modal-body">
-                  <div class="mb-3">
-                     <label for="formFile" class="form-label">Import from spreadsheet</label>
-                     <input class="form-control" type="file" id="formFile">
-                  </div>
+               <div class="modal-body" action="import.php" method="POST" enctype="multipart/form-data" >
+                  <form id="importStudent" action="" method="post">
+                     <div class="mb-3">
+                        <label for="importFile" class="form-label">Import from spreadsheet</label>
+                        <input class="form-control" type="file" name="importFile">
+                        <button type="submit" name="save_excel_data" class="btn btn-primary mt-3">Import</button>
+                     </div>
+                  </form>
                   <hr id="hr1">
                   <label class="mb-2">Or add manually</label>
                   <fieldset>
@@ -177,19 +183,19 @@ $page = "manage_student";
                         <div class="col-sm-5 col-md-6 mb-2">
                            <div class="form-group">
                               <label for="firstname">Firstname</label>
-                              <input type="text" name="firstname" class="form-control" placeholder="Enter Firstname" required />
+                              <input type="text" name="firstname" class="form-control" required />
                            </div>
                         </div>
                         <div class="col-sm-5 col-md-6 mb-2">
                            <div class="form-group">
                               <label for="lastname">Lastname</label>
-                              <input type="text" name="lastname" class="form-control" placeholder="Enter Lastname" required />
+                              <input type="text" name="lastname" class="form-control" required />
                            </div>
                         </div>
                      </div>
                      <div class="form-group mb-2">
                         <label for="middlename">Middlename</label>
-                        <input type="middlename" name="middlename" class="form-control" placeholder="Enter Middlename" />
+                        <input type="middlename" name="middlename" class="form-control" />
                      </div>
                      <div class="form-group mb-2">
                         <select name="position" id="position" class="form-select form-control" hidden>
@@ -206,19 +212,19 @@ $page = "manage_student";
                      </div>
                      <div class="form-group mb-2">
                         <label for="username">Username</label>
-                        <input type="username" name="username" class="form-control" placeholder="Enter Username" required />
+                        <input type="username" name="username" class="form-control" required />
                      </div>
                      <div class="form-group mb-2">
                         <label for="email">Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="email@example.com" required />
+                        <input type="email" name="email" class="form-control" required />
                      </div>
                      <div class="form-group mb-2">
                         <label for="password">Password</label>
-                        <input id="password" type="password" name="password" class="form-control" placeholder="enter your passsword" required />
+                        <input id="password" type="password" name="password" class="form-control" required />
                      </div>
                      <div class="form-group mb-3">
                         <label for="confirm_password">Confirm Password</label>
-                        <input type="password" name="confirm_password" class="form-control" placeholder="repeat passsword" required />
+                        <input type="password" name="confirm_password" class="form-control" required />
                      </div>
                   </fieldset>
                </div>

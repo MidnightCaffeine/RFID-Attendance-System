@@ -2,6 +2,12 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 $d = date("Y-m-d");
+if ($_SESSION['username'] == '') {
+	session_unset();
+	session_write_close();
+	session_destroy();
+	header("Location: index.php");
+ }
 ?>
 
 <table id="studentTable" class="display table table-bordered table-striped">

@@ -1,7 +1,13 @@
 <?php include_once 'lib/connection.php';
 session_start();
-include 'lib/student/addStudent.php';
+include 'lib/card/addCard.php';
 $page = "rfid_card";
+if ($_SESSION['username'] == '' && $_SESSION['position'] != 'Administrator' || $_SESSION['position'] != 'Instructor') {
+   session_unset();
+   session_write_close();
+   session_destroy();
+   header("Location: index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -80,7 +86,7 @@ $page = "rfid_card";
                </div>
 
                <!-- add trigger modal -->
-               <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#addStudent">Add Card</button>
+               <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#addCard">Add Card</button>
 
             </div>
             <table id="studentTable" class="display table table-bordered">
@@ -145,10 +151,10 @@ $page = "rfid_card";
 
    <!-- add User Modal -->
 
-   <div class="modal fade" id="addStudent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+   <div class="modal fade" id="addCard" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
          <div class="modal-content">
-            <form id="addstudent" action="" method="post">
+            <form id="addCard" action="" method="post">
                <div class="modal-header">
                   <h1 class="modal-title fs-5" id="staticBackdropLabel">Add RFID Card</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -171,7 +177,7 @@ $page = "rfid_card";
                   </fieldset>
                </div>
                <div class="modal-footer">
-                  <button class="btn btn-primary" type="submit" name="btn_addStudent">Add</button>
+                  <button class="btn btn-primary" type="submit" name="btn_addCard">Add</button>
                </div>
             </form>
          </div>

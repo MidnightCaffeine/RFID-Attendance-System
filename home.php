@@ -1,7 +1,13 @@
 <?php include_once 'lib/connection.php';
 session_start();
-include 'lib/student/addStudent.php';
+$d = date("Y-m-d");
 $page = "home";
+if ($_SESSION['username'] == '') {
+   session_unset();
+   session_write_close();
+   session_destroy();
+   header("Location: index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,13 +54,197 @@ $page = "home";
          <h1>Dashboard</h1>
          <nav>
             <ol class="breadcrumb">
-               <li class="breadcrumb-item active"><a href="home.php">Home</a></li>
+               <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+               <li class="breadcrumb-item active">Dashboard</li>
             </ol>
          </nav>
       </div>
       <section class="section dashboard">
          <div class="row">
-            
+            <div class="col-lg-8">
+               <div class="row">
+                  <div class="col-xxl-4 col-md-6">
+                     <div class="card info-card sales-card">
+                        <div class="card-body">
+                           <h5 class="card-title">Total Student</span></h5>
+                           <?php
+                           $countStudent = $pdo->prepare("SELECT * FROM `student_list`");
+                           $countStudent->execute();
+
+                           $count = 0;
+
+                           while ($row = $countStudent->fetch(PDO::FETCH_ASSOC)) {
+                              $count++;
+                           }
+                           ?>
+                           <div class="d-flex align-items-center">
+                              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class='bx bxs-face'></i></div>
+                              <div class="ps-3">
+                                 <h6><?php echo $count; ?></h6>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-4 col-md-6">
+                     <div class="card info-card revenue-card">
+                        <div class="card-body">
+                           <h5 class="card-title">Total Instructors</span></h5>
+                           <?php
+                           $countInstructor = $pdo->prepare("SELECT * FROM `teacher_list`");
+                           $countInstructor->execute();
+
+                           $count = 0;
+
+                           while ($row = $countInstructor->fetch(PDO::FETCH_ASSOC)) {
+                              $count++;
+                           }
+                           ?>
+                           <div class="d-flex align-items-center">
+                              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class='bx bx-group'></i></div>
+                              <div class="ps-3">
+                                 <h6><?php echo $count; ?></h6>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-4 col-xl-12">
+                     <div class="card info-card customers-card">
+                        <div class="card-body">
+                           <h5 class="card-title">Available Cards</span></h5>
+                           <?php
+                           $countCard = $pdo->prepare("SELECT * FROM `rfid_card` WHERE `card_status`='Available'");
+                           $countCard->execute();
+
+                           $count = 0;
+
+                           while ($row = $countCard->fetch(PDO::FETCH_ASSOC)) {
+                              $count++;
+                           }
+                           ?>
+                           <div class="d-flex align-items-center">
+                              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class='bx bx-id-card'></i></div>
+                              <div class="ps-3">
+                                 <h6><?php echo $count; ?></h6>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <h5 class="card-title">Student Attendance Report<span> | Today</span></h5>
+               <div class="row">
+                  <div class="col-xxl-4 col-md-6">
+                     <div class="card info-card ontime-card">
+                        <div class="card-body">
+                           <h5 class="card-title">On Time Students Count</span></h5>
+                           <?php
+                           $countStudent = $pdo->prepare("SELECT * FROM `attendance` WHERE remark='On Time' AND date_in='$d' ");
+                           $countStudent->execute();
+
+                           $count = 0;
+
+                           while ($row = $countStudent->fetch(PDO::FETCH_ASSOC)) {
+                              $count++;
+                           }
+                           ?>
+                           <div class="d-flex align-items-center">
+                              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class='bx bxs-bell'></i></div>
+                              <div class="ps-3">
+                                 <h6><?php echo $count; ?></h6>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-4 col-md-6">
+                     <div class="card info-card late-card">
+                        <div class="card-body">
+                           <h5 class="card-title">Late Students Count</span></h5>
+                           <?php
+                           $countInstructor = $pdo->prepare("SELECT * FROM `attendance` WHERE remark='Late' AND date_in='$d'");
+                           $countInstructor->execute();
+
+                           $count = 0;
+
+                           while ($row = $countInstructor->fetch(PDO::FETCH_ASSOC)) {
+                              $count++;
+                           }
+                           ?>
+                           <div class="d-flex align-items-center">
+                              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class='bx bxs-bell-off'></i></div>
+                              <div class="ps-3">
+                                 <h6><?php echo $count; ?></h6>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-4 col-xl-12">
+                     <div class="card info-card absent-card">
+                        <div class="card-body">
+                           <h5 class="card-title">Absent Student Count</span></h5>
+                           <?php
+                           $countCard = $pdo->prepare("SELECT * FROM `attendance` WHERE remark='Absent' AND date_in='$d'");
+                           $countCard->execute();
+
+                           $count = 0;
+
+                           while ($row = $countCard->fetch(PDO::FETCH_ASSOC)) {
+                              $count++;
+                           }
+                           ?>
+                           <div class="d-flex align-items-center">
+                              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class='bx bx-calendar-x'></i></i></div>
+                              <div class="ps-3">
+                                 <h6><?php echo $count; ?></h6>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="card">
+                  <div class="card-body">
+                     <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+                     <div class="activity">
+                        <div class="activity-item d-flex">
+                           <div class="activite-label">32 min</div>
+                           <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                           <div class="activity-content"> Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae</div>
+                        </div>
+                        <div class="activity-item d-flex">
+                           <div class="activite-label">56 min</div>
+                           <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+                           <div class="activity-content"> Voluptatem blanditiis blanditiis eveniet</div>
+                        </div>
+                        <div class="activity-item d-flex">
+                           <div class="activite-label">2 hrs</div>
+                           <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+                           <div class="activity-content"> Voluptates corrupti molestias voluptatem</div>
+                        </div>
+                        <div class="activity-item d-flex">
+                           <div class="activite-label">1 day</div>
+                           <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+                           <div class="activity-content"> Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore</div>
+                        </div>
+                        <div class="activity-item d-flex">
+                           <div class="activite-label">2 days</div>
+                           <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+                           <div class="activity-content"> Est sit eum reiciendis exercitationem</div>
+                        </div>
+                        <div class="activity-item d-flex">
+                           <div class="activite-label">4 weeks</div>
+                           <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
+                           <div class="activity-content"> Dicta dolorem harum nulla eius. Ut quidem quidem sit quas</div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
          </div>
       </section>
    </main>

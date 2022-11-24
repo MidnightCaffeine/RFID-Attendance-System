@@ -1,6 +1,12 @@
 <?php
 session_start();
 $page = "edit_student";
+if ($_SESSION['username'] == '' && $_SESSION['position'] != 'Administrator' || $_SESSION['position'] != 'Instructor') {
+	session_unset();
+	session_write_close();
+	session_destroy();
+	header("Location: index.php");
+ }
 // include database connection file
 include_once("lib/connection.php");
 

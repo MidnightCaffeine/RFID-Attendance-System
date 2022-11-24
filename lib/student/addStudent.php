@@ -1,7 +1,15 @@
 <?php
+session_start();
+if ($_SESSION['username'] == '' && $_SESSION['position'] != 'Administrator' || $_SESSION['position'] != 'Instructor') {
+    session_unset();
+    session_write_close();
+    session_destroy();
+    header("Location: index.php");
+}
+
 if (isset($_POST['btn_addStudent'])) {
 
-    $firstname = ucwords(strtolower($_POST['firstname'])) ;
+    $firstname = ucwords(strtolower($_POST['firstname']));
     $lastname = ucwords(strtolower($_POST['lastname']));
     $middlename = ucwords(strtolower($_POST['middlename']));
     $username = $_POST['username'];

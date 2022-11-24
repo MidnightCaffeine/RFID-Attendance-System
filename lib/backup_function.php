@@ -1,6 +1,14 @@
 <?php include_once 'connection.php';
 session_start();
 $page = "backup";
+
+if ($_SESSION['username'] == '' && $_SESSION['position'] != 'Administrator') {
+	session_unset();
+    session_write_close();
+    session_destroy();
+    header("Location: ../index.php");
+}
+
 ?>
 
 <!DOCTYPE html>

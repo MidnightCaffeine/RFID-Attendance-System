@@ -1,4 +1,10 @@
 <?php
+if ($_SESSION['username'] == '' && $_SESSION['position'] != 'Administrator') {
+	session_unset();
+	session_write_close();
+	session_destroy();
+    header("Location: index.php");
+}
 session_start();
 $page = "edit_cards";
 // include database connection file

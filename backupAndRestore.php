@@ -4,6 +4,9 @@ session_start();
 $page = "backup_and_restore";
 
 if ($_SESSION['username'] == '' && $_SESSION['position'] != 'Administrator') {
+    session_unset();
+	session_write_close();
+	session_destroy();
     header("Location: index.php");
 }
 ?>
